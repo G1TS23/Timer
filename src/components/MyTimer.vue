@@ -48,8 +48,8 @@ import moment from 'moment';
 export default {
     data() {
         return{
-            seconds: 5,
-            minutes: 1,
+            seconds: 0,
+            minutes: 0,
             hours: 0,
             hoursNow: 0,
             minutesNow: 0,
@@ -64,8 +64,7 @@ export default {
             isPlaying: false,
             isReset: true,
             startMilli: 0,
-            newMilli: 0,
-            count: 0
+            newMilli: 0
         }
     },created(){
         this.totalTime = this.seconds + this.minutes * 60 + this.hours * 3600;
@@ -76,8 +75,6 @@ export default {
                 this.minutesNow = now.getMinutes();
                 this.secondesNow = now.getSeconds()
                 this.milliNow = now.getMilliseconds();
-                console.log("Now : " + this.hoursNow + " : " + this.minutesNow + " : " + this.secondesNow + "," + this.milliNow);
-                console.log(this.count++);
             }, 1000);
     },
     methods: {
@@ -154,7 +151,6 @@ export default {
             this.isPlaying = false;
             this.isReset = true;
             this.widthBar = 100;
-            
             }
         },
         pauseTimer(){
