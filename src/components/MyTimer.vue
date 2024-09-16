@@ -30,8 +30,8 @@
 
         <div class="timer-buttons">
             <p class="cancel btn" @click="resetTimer()" :class="{ active : !isReset}">Annuler</p>
-            <p v-show="!isPlaying && isReset" class="play btn" @click="newStartTimer()" :class="{ pointer : hours + minutes + seconds > 0 }">Démarrer</p>
-            <p v-show="!isPlaying && !isReset" class="resume btn" @click="newStartTimer()">Reprendre</p>
+            <p v-show="!isPlaying && isReset" class="play btn" @click="startTimer()" :class="{ pointer : hours + minutes + seconds > 0 }">Démarrer</p>
+            <p v-show="!isPlaying && !isReset" class="resume btn" @click="startTimer()">Reprendre</p>
             <p v-show="isPlaying" class="play btn pause" @click="pauseTimer()">Pause</p>
 
         </div>
@@ -79,17 +79,6 @@ export default {
     },
     methods: {
         startTimer(){
-            if(this.seconds > 0 || this.minutes > 0 || this.hours > 0)
-            {
-            this.isPlaying = true;
-            if(this.isReset){
-                this.calculateIntervalGap();
-            }
-            this.intervalId = setInterval(() => {
-                this.decrementWidthGap();
-            },10);}
-        },
-        newStartTimer(){
             this.startMilli = new Date().getMilliseconds();
 
             if(this.seconds > 0 || this.minutes > 0 || this.hours > 0)
@@ -100,12 +89,12 @@ export default {
             }
 
             this.intervalId = setInterval(() => {
-                this.newDecrementWidthGap();
+                this.decrementWidthGap();
                 this.startMilli = this.newMilli;
             },10);}
 
         },
-        newDecrementWidthGap(){
+        decrementWidthGap(){
             this.newMilli = new Date().getMilliseconds();
             let delta = this.newMilli - this.startMilli;
             if (delta < 0){
@@ -117,25 +106,11 @@ export default {
                     this.widthBar = 0;
                 } else {
                     this.totalSeconds = this.totalSeconds - ((delta)/1000);
-                    
                     this.widthBar = (this.widthBar - ((this.intervalGap / 10) * (delta)));
-                    console.log(this.intervalGap);
-                    console.log(this.widthBar);
                 }
             } else {
                 this.resetTimer();
             };
-        },
-        decrementWidthGap(){
-            this.totalSeconds = this.totalSeconds - .01;
-                if(this.widthBar !== 0){
-                    if(this.widthBar - this.intervalGap < 0){
-                        this.widthBar = 0;
-                        clearInterval(this.intervalId);
-                    } else this.widthBar = parseFloat((this.widthBar - this.intervalGap).toFixed(2));
-                } else {
-                    this.resetTimer();
-                };
         },
         calculateIntervalGap(){
             this.totalTime = this.seconds + this.minutes * 60 + this.hours * 3600;
