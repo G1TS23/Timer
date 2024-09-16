@@ -219,10 +219,10 @@ export default {
 
             let hours = this.hoursNow + Math.floor(totalSec / 3600);        
             let minutes = this.minutesNow + (Math.floor(totalSec/60) % 60);
-            let secondes = this.secondesNow + Math.floor(totalSec) % 60;
+            let seconds = this.secondesNow + Math.floor(totalSec) % 60;
 
             if (seconds > 60){
-                minutes += Math.floor(seconds)/60;
+                minutes += Math.floor(seconds/60);
             }
 
             if (minutes > 60){
