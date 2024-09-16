@@ -118,10 +118,9 @@ export default {
                 } else {
                     this.totalSeconds = this.totalSeconds - ((delta)/1000);
                     
-                    this.widthBar = parseFloat(
-                        (this.widthBar - 
-                        ((this.intervalGap / 10) * (delta))).toFixed(2)
-                    );
+                    this.widthBar = (this.widthBar - ((this.intervalGap / 10) * (delta)));
+                    console.log(this.intervalGap);
+                    console.log(this.widthBar);
                 }
             } else {
                 this.resetTimer();
